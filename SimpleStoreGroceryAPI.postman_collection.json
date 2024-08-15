@@ -175,12 +175,26 @@
 		},
 		{
 			"name": "Register a new API client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\",  () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \"clientName\": \"Postman on Valentin's computer\",\r\n   \"clientEmail\": \"aleksandra123@example.com\"\r\n}",
+					"raw": "{\r\n   \"clientName\": \"Postman on Valentin's computer\",\r\n   \"clientEmail\": \"{{$randomEmail}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -201,13 +215,32 @@
 		},
 		{
 			"name": "Create a new order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
+					"type": "apikey",
+					"apikey": [
 						{
-							"key": "token",
-							"value": "{{Token}}",
+							"key": "value",
+							"value": "2d136bdc355a08c90129fb2ec259086d4159be92efc562cdf59f34a948b4c894",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
 							"type": "string"
 						}
 					]
@@ -222,7 +255,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"cartId\": \"4YKBYtPSNjVuaChOJ2wmK\",\r\n    \"customerName\": \"{{$randomFullName}}\"\r\n}",
+					"raw": "{\r\n    \"cartId\": \"2CkRiGBjLjeIs6XyIxzkr\",\r\n    \"customerName\": \"{{$randomFullName}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -243,7 +276,31 @@
 		},
 		{
 			"name": "Get all orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token3}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -253,12 +310,18 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseURL}}/orders",
+					"raw": "{{baseURL}}/orders?pageSize=1",
 					"host": [
 						"{{baseURL}}"
 					],
 					"path": [
 						"orders"
+					],
+					"query": [
+						{
+							"key": "pageSize",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -394,6 +457,14 @@
 		{
 			"key": "Token",
 			"value": "90761077ce1f1be510b3ae7e52fc969f15d7b01a9d4b0d0a790039a69396c5d8"
+		},
+		{
+			"key": "Token2",
+			"value": "2d136bdc355a08c90129fb2ec259086d4159be92efc562cdf59f34a948b4c894"
+		},
+		{
+			"key": "Token3",
+			"value": "2d136bdc355a08c90129fb2ec259086d4159be92efc562cdf59f34a948b4c894"
 		}
 	]
 }
